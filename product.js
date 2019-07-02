@@ -54,7 +54,25 @@ product.get('/delete',function(req,res){
 
 	}
 });
-	
+product.post('/add',function(req,res){
+	var obj=req.body;
+	var i=400;
+	for(key in obj){
+		i++;
+		if(!obj[key]){
+			res.send({code:i ,msg: [key]+"required"})
+		}
+	}
+	pool.query('INSERT INTO xz_laptop  SET ?',[obj],function(err,result){
+		if(err) throw err;
+		if(result.affectedRows>0){
+			res.send({code:200,msg:'插入成功'});
+		}
+		else{
+			res.send({code:301,msg:'insert err'});
+		}
+	});
+});	
 	
 
 	
